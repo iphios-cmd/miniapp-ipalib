@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Установка файла</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: cardGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes cardGlow {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(60, 122, 205, 0.1);
+            }
+            50% {
+                box-shadow: 0 15px 50px rgba(60, 122, 205, 0.2);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #3c7acd 0%, #2c5c9e 100%);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .file-icon {
+            font-size: 80px;
+            animation: bounce 1s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .file-name {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+            word-break: break-word;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .message strong {
+            color: #3c7acd;
+            font-weight: 600;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-install {
+            background: linear-gradient(135deg, #3c7acd 0%, #2c5c9e 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(60, 122, 205, 0.3);
+        }
+        
+        .btn-install:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(60, 122, 205, 0.4);
+        }
+        
+        .btn-install:active {
+            transform: translateY(0);
+        }
+        
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .btn-cancel:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-cancel:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3c7acd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .file-icon {
+                font-size: 60px;
+            }
+            
+            .file-name {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="file-icon" id="fileIcon">📦</div>
+                <div class="file-name" id="fileName">Загрузка...</div>
+            </div>
+            <div class="content">
+                <div class="message" id="message">
+                    Нажмите ниже для установки
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-cancel" onclick="closeApp()">
+                        Отменить
+                    </button>
+                    <button class="btn btn-install" onclick="installFile()">
+                        Установить
+                    </button>
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        let installUrl = '';
+        
+        tg.ready();
+        tg.expand();
+        
+        // Получаем данные из параметров запуска
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileId = urlParams.get('file_id');
+        const fileName = decodeURIComponent(urlParams.get('file_name') || '');
+        const fileIcon = urlParams.get('icon') || '📦';
+        
+        // Устанавливаем данные файла
+        document.getElementById('fileIcon').textContent = fileIcon;
+        document.getElementById('fileName').textContent = fileName || 'Файл';
+        
+        // Получаем ссылку для установки из бота
+        if (fileId) {
+            tg.sendData(JSON.stringify({
+                action: 'get_install_url',
+                file_id: fileId
+            }));
+        }
+        
+        // Функция для установки URL
+        function setInstallUrl(url) {
+            installUrl = url;
+        }
+        
+        // Функция установки
+        function installFile() {
+            if (installUrl) {
+                const loading = document.getElementById('loading');
+                loading.style.display = 'block';
+                
+                setTimeout(() => {
+                    tg.openLink(installUrl);
+                    loading.style.display = 'none';
+                    tg.close();
+                }, 500);
+            } else {
+                tg.showAlert('Ссылка для установки не найдена');
+            }
+        }
+        
+        // Функция закрытия
+        function closeApp() {
+            tg.close();
+        }
+        
+        // Обработка данных от бота
+        tg.onEvent('mainButtonClicked', function() {
+            installFile();
+        });
+        
+        // Получение данных от бота
+        Telegram.WebApp.onEvent('popupClosed', function() {});
+        
+        // Анимация появления
+        document.querySelector('.card').style.animation = 'fadeInUp 0.6s ease-out';
+    </script>
+</body>
+</html>
