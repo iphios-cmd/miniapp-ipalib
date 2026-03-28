@@ -14,93 +14,28 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #2c5a9e 0%, #3c7acd 100%);
+            background: #f0f4f8;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* Анимированный фон */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .circle:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            right: -150px;
-            animation-delay: 0s;
-        }
-
-        .circle:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -100px;
-            left: -100px;
-            animation-delay: 5s;
-        }
-
-        .circle:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 50%;
-            left: 20%;
-            animation-delay: 2s;
-        }
-
-        .circle:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            bottom: 20%;
-            right: 10%;
-            animation-delay: 7s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-30px) rotate(10deg);
-            }
-        }
-
-        /* Основной контейнер */
         .container {
-            position: relative;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 30px 25px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
             max-width: 400px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s ease-out;
-            backdrop-filter: blur(10px);
+            animation: slideUp 0.4s ease-out;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -108,115 +43,110 @@
             }
         }
 
-        /* Иконка файла */
-        .file-icon {
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            padding: 40px 24px 32px;
             text-align: center;
-            margin-bottom: 25px;
-            animation: bounce 1s ease-in-out infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .package-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+            position: relative;
         }
 
-        .file-icon svg {
-            width: 100px;
-            height: 100px;
-            filter: drop-shadow(0 5px 15px rgba(60, 122, 205, 0.3));
+        .package-icon::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
         }
 
-        /* Название файла */
-        .file-name {
-            text-align: center;
-            font-size: 20px;
+        .package-icon::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 2px;
+        }
+
+        .file-title {
+            color: #ffffff;
+            font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            word-break: break-word;
-            background: linear-gradient(135deg, #3c7acd, #2c5a9e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
-        /* Текст инструкции */
-        .instruction {
+        .body {
+            padding: 24px;
             text-align: center;
-            font-size: 16px;
-            color: #7f8c8d;
-            margin-bottom: 30px;
+        }
+
+        .instruction {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
             line-height: 1.5;
         }
 
-        /* Кнопки */
         .buttons {
             display: flex;
-            gap: 15px;
-            flex-direction: column;
+            gap: 12px;
+            justify-content: center;
         }
 
         .btn {
-            padding: 15px 25px;
+            flex: 1;
+            max-width: 140px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-install {
-            background: linear-gradient(135deg, #3c7acd, #2c5a9e);
-            color: white;
-            box-shadow: 0 5px 15px rgba(60, 122, 205, 0.4);
-        }
-
-        .btn-install:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(60, 122, 205, 0.5);
-        }
-
-        .btn-install:active {
-            transform: translateY(0);
+            transition: all 0.2s ease;
         }
 
         .btn-cancel {
-            background: #ecf0f1;
-            color: #7f8c8d;
-            border: 1px solid #d5dbdb;
+            background: #f3f4f6;
+            color: #4b5563;
         }
 
         .btn-cancel:hover {
-            background: #e0e4e5;
-            transform: translateY(-2px);
+            background: #e5e7eb;
         }
 
         .btn-cancel:active {
+            transform: scale(0.98);
+        }
+
+        .btn-install {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-install:hover {
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-install:active {
             transform: translateY(0);
         }
 
@@ -227,36 +157,45 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(240, 244, 248, 0.95);
+            backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.2s ease;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .loader {
+            text-align: center;
+            background: #ffffff;
+            padding: 32px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #3c7acd;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 16px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #3b82f6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #4b5563;
+            font-size: 14px;
         }
 
         .loading.hide {
@@ -266,78 +205,55 @@
         /* Адаптивность */
         @media (max-width: 480px) {
             .container {
-                padding: 25px 20px;
+                border-radius: 14px;
             }
-            
-            .file-name {
-                font-size: 18px;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-        }
 
-        /* Темная тема Telegram */
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(30, 30, 35, 0.95);
+            .header {
+                padding: 32px 20px 24px;
             }
-            
-            .file-name {
-                background: linear-gradient(135deg, #5c9aff, #3c7acd);
-                -webkit-background-clip: text;
-                background-clip: text;
+
+            .package-icon {
+                width: 56px;
+                height: 56px;
             }
-            
-            .instruction {
-                color: #b0b0b0;
+
+            .file-title {
+                font-size: 16px;
             }
-            
-            .btn-cancel {
-                background: #2c2c2e;
-                color: #b0b0b0;
-                border-color: #3a3a3c;
+
+            .body {
+                padding: 20px;
+            }
+
+            .btn {
+                padding: 11px 20px;
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-    </div>
-    
     <div class="container">
-        <div class="file-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 3H8C6.9 3 6 3.9 6 5V19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V8L13 3Z" fill="#3c7acd" stroke="#2c5a9e" stroke-width="1.5"/>
-                <path d="M13 3V8H18" fill="#2c5a9e" stroke="#2c5a9e" stroke-width="1.5"/>
-                <rect x="8" y="13" width="8" height="2" fill="white"/>
-                <rect x="8" y="16" width="5" height="2" fill="white"/>
-            </svg>
+        <div class="header">
+            <div class="package-icon"></div>
+            <div class="file-title" id="fileName">Файл</div>
         </div>
         
-        <div class="file-name" id="fileName">Загрузка...</div>
-        <div class="instruction">
-            <tg-emoji emoji-id='5875008416132370818'>⬇️</tg-emoji> Нажмите ниже для установки
-        </div>
-        
-        <div class="buttons">
-            <button class="btn btn-install" id="installBtn">
-                <tg-emoji emoji-id='5899757765743615694'>📥</tg-emoji> Установить
-            </button>
-            <button class="btn btn-cancel" id="cancelBtn">
-                <tg-emoji emoji-id='5778527486270770928'>❌</tg-emoji> Отменить
-            </button>
+        <div class="body">
+            <div class="instruction">Нажмите ниже для установки</div>
+            
+            <div class="buttons">
+                <button class="btn btn-cancel" id="cancelBtn">Отменить</button>
+                <button class="btn btn-install" id="installBtn">Установить</button>
+            </div>
         </div>
     </div>
     
     <div class="loading hide" id="loading">
-        <div class="spinner"></div>
+        <div class="loader">
+            <div class="spinner"></div>
+            <div class="loading-text">Подготовка к установке...</div>
+        </div>
     </div>
 
     <script>
@@ -355,8 +271,8 @@
         document.getElementById('fileName').textContent = fileName;
         
         // Настройка цвета шапки Telegram
-        tg.setHeaderColor('#3c7acd');
-        tg.setBackgroundColor('#3c7acd');
+        tg.setHeaderColor('#f0f4f8');
+        tg.setBackgroundColor('#f0f4f8');
         
         // Обработчик кнопки установки
         document.getElementById('installBtn').addEventListener('click', function() {
@@ -365,93 +281,63 @@
                 const loading = document.getElementById('loading');
                 loading.classList.remove('hide');
                 
+                // Вибрация
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('medium');
+                }
+                
                 // Небольшая задержка для анимации
                 setTimeout(() => {
-                    // Открываем ссылку в Safari
+                    // Открываем ссылку
                     window.location.href = installUrl;
                     
-                    // Закрываем Mini App через 1 секунду
+                    // Закрываем Mini App
                     setTimeout(() => {
                         tg.close();
-                    }, 1000);
+                    }, 800);
                 }, 300);
             } else {
                 tg.showAlert('❌ Ошибка: ссылка для установки не найдена!');
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
             }
         });
         
         // Обработчик кнопки отмены
         document.getElementById('cancelBtn').addEventListener('click', function() {
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+            
             // Анимация закрытия
-            document.querySelector('.container').style.animation = 'slideUp 0.3s reverse';
+            const container = document.querySelector('.container');
+            container.style.animation = 'slideUp 0.3s ease-out reverse';
             
             setTimeout(() => {
                 tg.close();
             }, 300);
         });
         
-        // Обработка свайпа вниз для закрытия
-        let startY = 0;
-        document.addEventListener('touchstart', (e) => {
-            startY = e.touches[0].clientY;
-        });
-        
-        document.addEventListener('touchmove', (e) => {
-            const currentY = e.touches[0].clientY;
-            const diff = currentY - startY;
-            
-            if (diff > 100 && window.scrollY === 0) {
-                tg.close();
-            }
-        });
-        
-        // Добавляем эффект пульсации для кнопок
-        const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                ripple.style.position = 'absolute';
-                ripple.style.top = e.clientY - this.getBoundingClientRect().top + 'px';
-                ripple.style.left = e.clientX - this.getBoundingClientRect().left + 'px';
-                ripple.style.width = '0';
-                ripple.style.height = '0';
-                ripple.style.borderRadius = '50%';
-                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-                ripple.style.transform = 'translate(-50%, -50%)';
-                ripple.style.transition = 'width 0.5s, height 0.5s';
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.style.width = '300px';
-                    ripple.style.height = '300px';
-                }, 0);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 500);
-            });
-        });
-        
-        // Анимация появления элементов
-        const elements = document.querySelectorAll('.file-icon, .file-name, .instruction, .btn');
-        elements.forEach((el, index) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                el.style.transition = 'all 0.5s ease';
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }, index * 100);
-        });
-        
         // Проверка наличия ссылки
         if (!installUrl) {
-            tg.showAlert('⚠️ Внимание: ссылка для установки не настроена!\n\nОбратитесь к администратору.', () => {
-                tg.close();
-            });
+            setTimeout(() => {
+                tg.showAlert('⚠️ Внимание: ссылка для установки не настроена!\n\nОбратитесь к администратору.', () => {
+                    tg.close();
+                });
+            }, 500);
         }
+        
+        // Поддержка основной кнопки Telegram
+        tg.MainButton.setText('Установить');
+        tg.MainButton.setParams({
+            color: '#3b82f6',
+            text_color: '#ffffff'
+        });
+        tg.MainButton.onClick(() => {
+            document.getElementById('installBtn').click();
+        });
+        tg.MainButton.show();
     </script>
 </body>
 </html>
