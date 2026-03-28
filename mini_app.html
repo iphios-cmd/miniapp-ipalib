@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Установка IPA</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(60, 122, 205, 0.15);
+            overflow: hidden;
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .file-icon {
+            background: linear-gradient(135deg, #3c7acd 0%, #2c5a9e 100%);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .icon-wrapper {
+            position: relative;
+            z-index: 1;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .icon-wrapper svg {
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .icon-wrapper:hover svg {
+            transform: scale(1.05);
+        }
+
+        .file-name {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            word-break: break-word;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content {
+            padding: 32px 24px;
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeIn 0.5s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .message p {
+            color: #495057;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .download-icon {
+            display: inline-block;
+            animation: bounce 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            animation: slideUp 0.5s ease-out 0.4s both;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3c7acd 0%, #2c5a9e 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(60, 122, 205, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(60, 122, 205, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #3c7acd;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .file-icon {
+                padding: 30px 20px;
+            }
+            
+            .file-name {
+                font-size: 18px;
+            }
+            
+            .content {
+                padding: 24px 20px;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="file-icon">
+                <div class="icon-wrapper">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 3H4V21H20V8H13V3Z" fill="white" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13 3V8H18" stroke="#3c7acd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 12V16M10 14H14" stroke="#3c7acd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="file-name" id="fileName">Загрузка...</div>
+            </div>
+            <div class="content">
+                <div class="message">
+                    <p>
+                        <span class="download-icon">📱</span>
+                        Нажмите ниже для установки
+                    </p>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-secondary" onclick="closeApp()">
+                        Отменить
+                    </button>
+                    <button class="btn btn-primary" onclick="installApp()">
+                        Установить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        let installUrl = '';
+        let fileName = '';
+
+        // Инициализация Mini App
+        tg.ready();
+        tg.expand();
+        tg.enableClosingConfirmation();
+
+        // Получаем данные из start_param
+        const urlParams = new URLSearchParams(window.location.search);
+        const startParam = urlParams.get('startapp') || tg.initDataUnsafe.start_param;
+        
+        if (startParam) {
+            try {
+                const data = JSON.parse(decodeURIComponent(startParam));
+                installUrl = data.url;
+                fileName = data.name;
+                document.getElementById('fileName').textContent = fileName;
+                
+                // Устанавливаем цвет шапки
+                tg.setHeaderColor('#3c7acd');
+                tg.setBackgroundColor('#f5f7fa');
+                
+                // Показываем кнопку "Назад"
+                tg.BackButton.show();
+                tg.BackButton.onClick(() => {
+                    closeApp();
+                });
+            } catch (e) {
+                console.error('Error parsing data:', e);
+                document.getElementById('fileName').textContent = 'Ошибка загрузки';
+            }
+        } else {
+            document.getElementById('fileName').textContent = 'Файл не найден';
+        }
+
+        function showLoading() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.innerHTML = '<div class="spinner"></div>';
+            document.body.appendChild(loadingDiv);
+            return loadingDiv;
+        }
+
+        function closeApp() {
+            tg.close();
+        }
+
+        function installApp() {
+            if (installUrl) {
+                // Показываем анимацию загрузки
+                const loading = showLoading();
+                
+                // Небольшая задержка для анимации
+                setTimeout(() => {
+                    // Открываем ссылку в Safari
+                    window.location.href = installUrl;
+                    
+                    // Закрываем Mini App через 1 секунду
+                    setTimeout(() => {
+                        loading.remove();
+                        tg.close();
+                    }, 1000);
+                }, 300);
+            } else {
+                tg.showAlert('Ошибка: ссылка для установки не найдена');
+            }
+        }
+
+        // Анимация при появлении
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            btn.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
